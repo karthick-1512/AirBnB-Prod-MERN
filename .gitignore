@@ -1,0 +1,5 @@
+.idea
+
+frontend-react/.env
+backend-node/uploads/*
+backend-node/.env
