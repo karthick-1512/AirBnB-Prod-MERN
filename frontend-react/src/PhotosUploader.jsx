@@ -6,40 +6,41 @@ export default function PhotosUploader({addedPhotos,onChange}) {
   const [photoLink,setPhotoLink] = useState('');
 
 
-//   function uploadPhoto(ev) {
-//   ev.preventDefault();
-//   alert("File upload is restricted by the owner due to S3 abuse concerns.");
-// }
+function uploadPhoto(ev) {
+  ev.preventDefault();
+  alert("Photo uploads have been disabled due to misuse and excessive use of cloud storage.");
+}
 
-// function addPhotoByLink(ev) {
-//   ev.preventDefault();
-//   alert("Uploading via link is restricted by the owner due to misuse of the S3 bucket.");
-//   setPhotoLink('');
-// }
+function addPhotoByLink(ev) {
+  ev.preventDefault();
+  alert("Uploading via link is currently disabled due to misuse and overuse of cloud storage limits.");
+  setPhotoLink('');
+}
 
-  async function addPhotoByLink(ev) {
-    ev.preventDefault();
-    const {data:filename} = await axios.post('/upload-by-link', {link: photoLink});
-    onChange(prev => {
-      return [...prev, filename];
-    });
-    setPhotoLink('');
-  }
-  function uploadPhoto(ev) {
-    const files = ev.target.files;
-    const data = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      data.append('photos', files[i]);
-    }
-    axios.post('/upload', data, {
-      headers: {'Content-type':'multipart/form-data'}
-    }).then(response => {
-      const {data:filenames} = response;
-      onChange(prev => {
-        return [...prev, ...filenames];
-      });
-    })
-  }
+
+  // async function addPhotoByLink(ev) {
+  //   ev.preventDefault();
+  //   const {data:filename} = await axios.post('/upload-by-link', {link: photoLink});
+  //   onChange(prev => {
+  //     return [...prev, filename];
+  //   });
+  //   setPhotoLink('');
+  // }
+  // function uploadPhoto(ev) {
+  //   const files = ev.target.files;
+  //   const data = new FormData();
+  //   for (let i = 0; i < files.length; i++) {
+  //     data.append('photos', files[i]);
+  //   }
+  //   axios.post('/upload', data, {
+  //     headers: {'Content-type':'multipart/form-data'}
+  //   }).then(response => {
+  //     const {data:filenames} = response;
+  //     onChange(prev => {
+  //       return [...prev, ...filenames];
+  //     });
+  //   })
+  // }
   async function  removePhoto(ev,filename) {
     ev.preventDefault();
     

@@ -13,7 +13,7 @@ import PlacesPage from "./pages/PlacesPage";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import RegisterPage from "./pages/RegisterPage";
 
-axios.defaults.baseURL = "http://127.0.0.1:4000/api";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 function App() {

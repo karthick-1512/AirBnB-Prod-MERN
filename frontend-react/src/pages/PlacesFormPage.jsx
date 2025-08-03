@@ -56,41 +56,41 @@ export default function PlacesFormPage() {
   }
 
   async function savePlace(ev) {
-  //   ev.preventDefault();
-  // alert("Saving data has been blocked by the owner due to data storage abuse.");
     ev.preventDefault();
-     if (
-    !title.trim() ||
-    !address.trim() ||
-    addedPhotos.length === 0 ||
-    !description.trim() ||
+  alert("Saving data has been blocked by the owner due to data storage abuse.");
+  //   ev.preventDefault();
+  //    if (
+  //   !title.trim() ||
+  //   !address.trim() ||
+  //   addedPhotos.length === 0 ||
+  //   !description.trim() ||
     
-    !checkIn ||
-    !checkOut||
+  //   !checkIn ||
+  //   !checkOut||
     
-    !maxGuests ||
-    !price
-  ) {
-    alert("Please fill in all required fields before saving.");
-    return;
-  }
+  //   !maxGuests ||
+  //   !price
+  // ) {
+  //   alert("Please fill in all required fields before saving.");
+  //   return;
+  // }
 
-    const placeData = {
-      title, address, addedPhotos,
-      description, perks, extraInfo,
-      checkIn, checkOut, maxGuests, price,
-    };
-    if (id) {
-      // update
-      await axios.put('/places', {
-        id, ...placeData
-      });
-      setRedirect(true);
-    } else {
-      // new place
-      await axios.post('/places', placeData);
-      setRedirect(true);
-    }
+  //   const placeData = {
+  //     title, address, addedPhotos,
+  //     description, perks, extraInfo,
+  //     checkIn, checkOut, maxGuests, price,
+  //   };
+  //   if (id) {
+  //     // update
+  //     await axios.put('/places', {
+  //       id, ...placeData
+  //     });
+  //     setRedirect(true);
+  //   } else {
+  //     // new place
+  //     await axios.post('/places', placeData);
+  //     setRedirect(true);
+  //   }
 
   }
 
