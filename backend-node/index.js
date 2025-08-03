@@ -29,8 +29,9 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 const allowedOrigins = [
   'http://127.0.0.1:5173',
-  'https://airbnb-frontend-gules.vercel.app',
-  'https://airbnb-frontend-karthick-1512s-projects.vercel.app'
+  
+  "https://airbnb-frontend-git-deployment-b-8fb9a0-karthick-1512s-projects.vercel.app/",
+  "https://airbnb-frontend-husezp42x-karthick-1512s-projects.vercel.app/"
 ];
 
 app.use(cors({
