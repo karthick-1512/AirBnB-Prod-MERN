@@ -27,24 +27,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
-const allowedOrigins = [
-  'http://127.0.0.1:5173',
-  
-  "https://airbnb-frontend-git-deployment-b-8fb9a0-karthick-1512s-projects.vercel.app/",
-  "https://airbnb-frontend-husezp42x-karthick-1512s-projects.vercel.app/"
-];
-
 app.use(cors({
   credentials: true,
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like curl or mobile apps)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: true  // ← allows all origins
 }));
+
 
 
 function asyncHandler(fn) {
