@@ -14,6 +14,7 @@ const mime = require('mime-types');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
+
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
@@ -63,9 +64,12 @@ async function uploadToSupabase(path, originalFilename, mimetype) {
 }
 
 function getUserDataFromReq(req) {
-  return new Promise((resolve, reject) => {
-    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
-      if (err) throw err;
+  return new Promise((resolve) => {
+    const token = req.cookies?.token;
+    if (!token) return resolve(null);
+
+    jwt.verify(token, process.env.JWT_SECRET, {}, (err, userData) => {
+      if (err) return resolve(null); 
       resolve(userData);
     });
   });
@@ -100,9 +104,11 @@ app.post('/api/login', asyncHandler(async (req, res) => {
       }, jwtSecret, {}, (err, token) => {
         if (err) throw err;
         res.cookie('token', token, {
-            
-  sameSite: 'None',        
+  httpOnly: true,
+  secure: true,        
+  sameSite: 'None',   
 }).json(userDoc);
+
 
       });
     } else {
@@ -229,14 +235,6 @@ app.post('/api/places', asyncHandler(async (req, res) => {
   });
 }));
 
-app.get('/api/user-places', asyncHandler(async (req, res) => {
-  mongoose.connect(process.env.MONGO_URL);
-  const { token } = req.cookies;
-  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    const { id } = userData;
-    res.json(await Place.find({ owner: id }));
-  });
-}));
 
 app.get('/api/places/:id', asyncHandler(async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
@@ -272,8 +270,10 @@ app.get('/api/places', asyncHandler(async (req, res) => {
 }));
 
 app.post('/api/bookings', asyncHandler(async (req, res) => {
+  console.log(req.body);
   mongoose.connect(process.env.MONGO_URL);
   const userData = await getUserDataFromReq(req);
+    if (!userData) return res.status(404).json(null);
   const {
     place, checkIn, checkOut, numberOfGuests, name, phone, price,
   } = req.body;
@@ -287,7 +287,7 @@ app.post('/api/bookings', asyncHandler(async (req, res) => {
 }));
 
 app.get('/api/bookings', asyncHandler(async (req, res) => {
-  mongoose.connect(process.env.MONGO_URL);
+  await mongoose.connect(process.env.MONGO_URL);
   const { placeId } = req.query;
 
   if (placeId) {
@@ -296,15 +296,36 @@ app.get('/api/bookings', asyncHandler(async (req, res) => {
   }
 
   const userData = await getUserDataFromReq(req);
+  if (!userData) {
+    return res.status(404).json(null);  // prevent further execution
+  }
+
   const bookings = await Booking.find({ user: userData.id }).populate('place');
-  res.json(bookings);
+  return res.json(bookings);
 }));
+
 
 app.delete('/api/bookings/:id', asyncHandler(async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
   const { id } = req.params;
   await Booking.findByIdAndDelete(id);
   res.json({ success: true });
+}));
+
+
+
+app.get('/api/user-places', asyncHandler(async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+  const { token } = req.cookies;
+  if(!token){
+    return res.status(404).json(null);
+  }
+   
+  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    const { id } = userData;
+   
+    res.json(await Place.find({ owner: id }));
+  });
 }));
 
 app.listen(4000);

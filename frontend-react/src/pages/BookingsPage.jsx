@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import AccountNav from "../AccountNav";
 import BookingDates from "../BookingDates";
 import PlaceImg from "../PlaceImg";
 
+import { UserContext } from "../UserContext";
+
 export default function BookingsPage() {
   const [bookings, setBookings] = useState([]);
+    const {ready,user,setUser} = useContext(UserContext);
 
   useEffect(() => {
     axios.get("/bookings").then((response) => {
@@ -26,6 +29,10 @@ export default function BookingsPage() {
       alert("Failed to cancel booking. Try again later.");
     }
   };
+  
+  if (ready && !user) {
+      return <Navigate to={'/login'} />
+    }
 
   if (bookings?.length === 0) {
     return (

@@ -1,14 +1,26 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+
+import { useContext, useEffect, useState } from "react";
 import AccountNav from "../AccountNav";
+import { UserContext } from "../UserContext.jsx";
 export default function PlacesPage() {
   const [places,setPlaces] = useState([]);
+  
+   const {ready,user,setUser} = useContext(UserContext);
+
+  
   useEffect(() => {
+    
     axios.get('/user-places').then(({data}) => {
       setPlaces(data);
     });
   }, []);
+
+
+  if (ready && !user) {
+      return <Navigate to={'/login'} />
+    }
   return (
     <div>
       <AccountNav />
