@@ -36,34 +36,48 @@ export default function PlacesPage() {
         {places.length > 0 && places.map(place => (
   <div
     key={place._id}
-    className="relative flex bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
+    className="relative flex bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition mb-10"
   >
     {/* 🗑️ Delete Button */}
-  <button
+<button
   onClick={async (e) => {
     e.preventDefault(); // stop <Link>
-    const confirmed = window.confirm("Are you sure you want to delete?");
-    if (confirmed) {
-      try {
-        await axios.delete(`/places/${place._id}`);
-        setPlaces(prev => prev.filter(p => p._id !== place._id));
-      } catch (err) {
-        console.error("Delete failed:", err);
-        alert("Failed to delete the place.");
-      }
-    }
+    const confirmed = window.confirm("how dare you delete it!!!");
+    // if (confirmed) {
+    //   try {
+    //     await axios.delete(`/places/${place._id}`);
+    //     setPlaces(prev => prev.filter(p => p._id !== place._id));
+    //   } catch (err) {
+    //     console.error("Delete failed:", err);
+    //     alert("Failed to delete the place.");
+    //   }
+    // }
   }}
   className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white flex items-center gap-1 px-3 py-1.5 rounded-full z-10 text-sm shadow"
 >
-  {/* Trash Icon */}
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-    viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-    className="w-5 h-5">
-    <path strokeLinecap="round" strokeLinejoin="round"
-      d="M6 7.5h12M9.75 7.5v10.5m4.5-10.5v10.5M5.25 7.5L6 19.5a1.5 1.5 0 001.5 1.5h9a1.5 1.5 0 001.5-1.5l.75-12M10.5 4.5h3m-6 0a.75.75 0 01.75-.75h6a.75.75 0 01.75.75V6H6.75V4.5z" />
-  </svg>
-  Delete
+  {/* Show 'X' on mobile */}
+  <span className="block sm:hidden font-bold text-lg leading-none select-none">×</span>
+
+  {/* Show trash icon and text on sm and bigger */}
+  <span className="hidden sm:flex items-center gap-1">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-5 h-5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 7.5h12M9.75 7.5v10.5m4.5-10.5v10.5M5.25 7.5L6 19.5a1.5 1.5 0 001.5 1.5h9a1.5 1.5 0 001.5-1.5l.75-12M10.5 4.5h3m-6 0a.75.75 0 01.75-.75h6a.75.75 0 01.75.75V6H6.75V4.5z"
+      />
+    </svg>
+    Delete
+  </span>
 </button>
+
 
 
     <Link

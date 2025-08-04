@@ -52,26 +52,35 @@ export default function Header() {
     <header className="relative flex flex-col gap-2">
       <div className="flex justify-between items-center">
        
-        <div className="flex items-center gap-20">
+        <div className="flex items-center gap-6 sm:gap-20">
            <Link to={'/'} className="flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-               viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-               className="w-8 h-8 -rotate-90">
-            <path strokeLinecap="round" strokeLinejoin="round"
-                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485
-                   12 59.77 59.77 0 013.27 20.876L5.999
-                   12zm0 0h7.5"/>
-          </svg>
-          <span className="font-bold text-xl">AirBnB</span>
-        </Link>
-  <Link to="/" className="text-gray-700 hover:text-primary font-medium transition  ml-6">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="w-5 h-5 sm:w-7 sm:h-7 -rotate-90"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 12L3.269 3.126A59.768 59.768 0 0121.485
+         12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+    />
+  </svg>
+  <span className="font-bold text-base sm:text-lg">AirBnB</span>
+</Link>
+
+
+  <Link to="/" className="hidden sm:flex text-gray-700 hover:text-primary font-medium transition  ml-6">
     Home
   </Link>
 
-  <Link to="/account/bookings" className="text-gray-700 hover:text-primary font-medium transition">
+  <Link to="/account/bookings" className="hidden sm:flex text-gray-700 hover:text-primary font-medium transition">
     Bookings
   </Link>
-  <Link to="/account/places" className="text-gray-700 hover:text-primary font-medium transition">
+  <Link to="/account/places" className="hidden sm:flex text-gray-700 hover:text-primary font-medium transition">
     My Listing
   </Link>
    {/* 🔍 Search Field */}
