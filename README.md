@@ -14,6 +14,7 @@ Welcome! This is a clean, production-ready Airbnb-style web app built with the M
 - **Availability:** The UI prevents double-booking by disabling dates that are already reserved.
 - **Image Storage:** Images are securely stored using **Supabase Storage**.
 - **Data Management:** All listing and user data is stored in a **MongoDB** database.
+- **Search Functionality:** Guests can search for listings by location, dates, and other specific criteria.
 
 ---
 
